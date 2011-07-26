@@ -1,0 +1,16 @@
+{
+    "env": "local",
+    "db": {
+        "connection": "mongodb://localhost/conf"
+    },
+    "debug": true,
+    "name": "conf",
+    "session": {
+      "enabled": true,
+      "secret": "1ee3e9e2-1f1e-273d-7993-a36d9c498621"
+    },
+    "view": {
+      "extension": ".ejs",
+      "module": "ejs"
+    }
+}
