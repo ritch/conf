@@ -1,0 +1,16 @@
+{
+  "author": "",
+  "name": "conf",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ritch/conf.git"
+  },
+  "engines": {
+    "node": "~v0.4.7"
+  },
+  "dependencies": {
+		"hive": ">= 0.1.0"
+	},
+  "devDependencies": {}
+}
