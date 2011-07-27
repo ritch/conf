@@ -1,7 +1,7 @@
 {
-    "env": "local",
+    "env": "dev",
     "db": {
-        "connection": "mongodb://localhost/conf"
+        "connection": "mongodb://conf:asdjf9afj98af8as@staff.mongohq.com:10076/conf"
     },
     "debug": true,
     "name": "conf",
