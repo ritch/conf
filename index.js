@@ -1,15 +1,7 @@
 /*
 * conf
 */
-console.log('starting...');
 
-var express = require('express');
-var app = express.createServer();
+console.log('starting in ', __dirname);
 
-app.get('/', function(req, res) {
-	res.send('hi world...');
-});
-
-app.listen(process.env.PORT || 3000);
-
-//require('hive').init(__dirname);
+require('hive').init(__dirname);
