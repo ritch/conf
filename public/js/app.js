@@ -1,3 +1,4 @@
+var app;
 $(function() {
 
 	// ## Message Model
@@ -15,7 +16,7 @@ $(function() {
 		
 		like: function() {
 			this.set({points: this.get('points') + 1});
-			this.save();
+			if(!this.isNew()) this.save();
 		}
 		
 	});
@@ -26,8 +27,8 @@ $(function() {
 		
 		url: function() {
 			var pos = app && app.model.get('position')
-			 ,  query = {}
-			 ,  since = app && app.model.get('updated');
+			  , query = {}
+			  , since = app && app.model.get('updated');
 			
 			if(since) query.since = since;
 			if(pos) query = _.extend(query, pos);
@@ -67,6 +68,26 @@ $(function() {
 	
 	// ## Application Model
 	window.App = Backbone.Model.extend({
+		
+		initialize: function() {
+			var socket = io.connect('http://localhost')
+			  , _self  = this;
+			
+			socket.on('message', function (data) {
+				console.log('saw update', data);
+				var m = new Message(data);
+				_self.messages().add(m);
+				_self.messages().fetch({add: true});
+			});
+			
+			socket.on('update:message', function(data) {
+				console.log(data);
+				_self.messages()
+					.get(data._id)
+					.set(data);
+			});
+			
+		},
 		
 		defaults: {
 			messages: new MessageList()
@@ -145,7 +166,7 @@ $(function() {
 			_self.model.locate();
 			_self.model.messages().bind('all', function(e) {
 				var now = new Date()
-				 ,  utcNow = now.getTime() + (now.getTimezoneOffset() * 60000);
+				  , utcNow = now.getTime() + (now.getTimezoneOffset() * 60000);
 				_self.model.set({updated: utcNow});
 				_self.render();
 			});
@@ -179,11 +200,6 @@ $(function() {
 		
 	});
 	
-	var app = new AppView();
-	
-	// for prototype only
-	setInterval(function() {
-		app.model.messages().fetch({add: true});
-	}, 500);
+	app = new AppView();
 	
 });
