@@ -10,7 +10,8 @@
     "node": "~v0.4.7"
   },
   "dependencies": {
-		"hive": ">= 0.1.5"
+		"hive": ">= 0.1.5",
+		"express": ">= 1.0.0"
 	},
   "devDependencies": {}
 }
