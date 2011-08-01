@@ -4,6 +4,19 @@ $(function() {
 	// ## Message Model
 	window.Message = Backbone.Model.extend({
 		
+		initialize: function() {
+			
+			var LIFE_PER_POINT = 5000,
+				born = Number(this.get('created') || new Date().getTime()),
+				death = born + 5000 + (this.get('points') * LIFE_PER_POINT);
+			
+			// TODO - this.get('created') seems to be off
+			console.log(born - new Date().getTime());
+			
+			this.set({death: death});
+			
+		},
+		
 		idAttribute: '_id',
 		
 		defaults: {
@@ -15,13 +28,34 @@ $(function() {
 		},
 		
 		like: function() {
-			this.set({points: this.get('points') + 1});
+			this.set({
+				points: this.get('points') + 1,
+				death: this.get('death') + 5000
+			});
 			if(!this.isNew()) this.save();
 		}
 		
 	});
 
 	window.MessageList = Backbone.Collection.extend({
+		
+		initialize: function() {
+			var _self = this;
+			setInterval(function() {
+				_self.flush(new Date().getTime());
+			}, 500);
+		},
+		
+		flush: function(since) {
+			var _self = this;
+			_self.each(function(msg) {
+				//console.log(msg.get('death') - since);
+				if(msg.get('death') < since) {
+					//console.log('removing', msg);
+					_self.remove(msg);
+				}
+			});
+		},
 		
 		model: Message,
 		
@@ -70,7 +104,7 @@ $(function() {
 	window.App = Backbone.Model.extend({
 		
 		initialize: function() {
-			var socket = io.connect('http://localhost')
+			var socket = io.connect('/')
 			  , _self  = this;
 			
 			socket.on('message', function (data) {
