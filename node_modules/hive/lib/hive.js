@@ -9,7 +9,7 @@ hive.log 	    = require('./util/console').log;
 hive.hash		= require('./util/hash');
 
 hive.config = {
-	debug: false,
+	debug: true,
 	port: process.env.PORT || 3000,
 	host: 'localhost'
 };
