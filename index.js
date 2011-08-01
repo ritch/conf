@@ -13,7 +13,6 @@ require("formidable");
 require("underscore");
 require("connect-form");
 require("hamljs");
-require("forever");
 require("ejs");
 
 //require('hive').init(__dirname);
