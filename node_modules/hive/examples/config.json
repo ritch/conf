@@ -1,0 +1,7 @@
+{
+    "env": "local",
+    "db": {
+        "connection": "mongodb://localhost/sample"
+    },
+    "debug": true
+}
