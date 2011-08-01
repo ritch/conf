@@ -10,7 +10,6 @@
     "node": "~v0.4.7"
   },
   "dependencies": {
-		"hive": ">= 0.1.5",
 		"express": ">= 1.0.0",
 		"backbone":">= 0.3.0",
 		"mongoose":">= 1.0.0",
