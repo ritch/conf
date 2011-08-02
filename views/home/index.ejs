@@ -1,8 +1,13 @@
 <ul id="messages">
-<script id="message-template" type="text/template">
-    <p><%= message %></p>
-    <strong><%= points %></strong>
-</script>
+	<script id="message-template" type="text/template">
+		<div class="inner clearfix">
+			<p><%= message %></p>
+			<div class="points">
+				<canvas height="60" width="60"></canvas>
+				<div class="num"><%= points %></div>
+			</div>
+		</div>
+	</script>
 </ul>
 <div id="create">
     <input type="text" />
