@@ -275,7 +275,7 @@ $(function() {
 				ay = y + Math.sin(angle)*radius;
 				// Draw the segment.
 				if(!!(i % 2)) {
-					if(i / parts > percent && !finishing) {
+					if(i / parts > percent && !finishing && percent > 0) {
 						context.lineTo(rx, ry);
 						finishing = true;
 						context.strokeStyle = "#C6ED47";
