@@ -130,13 +130,8 @@ header {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
     background: linear-gradient(top, rgba(255,255,255,0) 0%,rgba(229,229,229,1) 100%); /* W3C */
 }
-<<<<<<< HEAD
 #messages {padding: 38px 0 52px;}
 #messages li p {float: left; width: 75%; text-shadow: white 1px 1px 0;}
-=======
-#messages {padding-bottom: 52px}
-#messages li p {float: left; width: 75%; text-shadow: #ccc 0 3px 0px;}
->>>>>>> style updates and minor fix
 #messages li .points {float: right;}
 #messages li .points canvas {margin-top: -15px;}
 #messages li .num {text-align: center; margin-top: -48px; width: 60px; margin-left: -3px;}
