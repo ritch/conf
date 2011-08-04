@@ -10,17 +10,8 @@
     "node": "~v0.4.7"
   },
   "dependencies": {
-		"express": ">= 1.0.0",
-		"backbone":">= 0.3.0",
-		"mongoose":">= 1.0.0",
-		"findit": ">= 0.0.3",
-		"rimraf": ">= 0.0.1",
-		"request": ">= 1.0.0",
-		"formidable": ">= 0.9.9",
-		"underscore": ">= 0.0.1",
-		"connect-form": ">= 0.2.1",
-		"hamljs": ">= 0.5.1",
-		"ejs": ">= 0.0.1"
+		"hive": ">= 0.1.5",
+		"socket.io": ">= 0.0.1"
 	},
   "devDependencies": {}
 }
