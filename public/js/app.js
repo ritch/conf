@@ -6,14 +6,8 @@ $(function() {
 		return now.getTime() + (now.getTimezoneOffset() * 60000);
 	}
 	
-	function guid() {
-		return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-		    return v.toString(16);
-		});
-	}
-	
-	console.log(guid());
+	// TODO: localStorage / collection
+	var Likes = {};
 
 	// ## Message Model
 	window.Message = Backbone.Model.extend({
@@ -35,7 +29,7 @@ $(function() {
 			
 		},
 		
-		idAttribute: '_id',
+		idAttribute: 'mid',
 		
 		defaults: {
 			points: 0
@@ -46,6 +40,11 @@ $(function() {
 		},
 		
 		like: function() {
+			
+			if(Likes[this.get('mid')]) return;
+			
+			Likes[this.get('mid')] = true;
+			
 			this.set({
 				points: this.get('points') + 1,
 				death: this.get('death') + 5000,
@@ -131,13 +130,16 @@ $(function() {
 				console.log('saw update', data);
 				var m = new Message(data);
 				_self.messages().add(m);
+				if(app && app.scroller) {
+					app.scroller.scrollToElement($('#messages li:last')[0]);
+				}
 				_self.messages().fetch({add: true});
 			});
 			
 			socket.on('update:message', function(data) {
-				console.log(data);
+				console.log('update', data);
 				_self.messages()
-					.get(data._id)
+					.get(data.mid)
 					.set(data);
 			});
 			
@@ -200,8 +202,10 @@ $(function() {
 		},
 		
 		render: function() {
-			this.model && $(this.el).html(this.template(this.model.toJSON()));
-			var status = new StatusView({el: this.$('canvas'), model: this.model});
+			if(!this.model) return;
+			$(this.el).html(this.template(this.model.toJSON()));
+			var canvas = $(this.el).find('canvas');
+			canvas.length && new StatusView({el: canvas, model: this.model});
 			if(this.model.hasChanged('updated')) {
 				this.flash();
 			}
@@ -213,7 +217,6 @@ $(function() {
 		},
 		
 		hover: function() {
-			console.log('this.hovered', this.hovered);
 			var color = this.hovered ? '#ffffff' : '#F4FFF5',
 				txt = this.hovered ? '#000000' : '#546657';
 			$(this.el).stop().animate({backgroundColor: color, color: txt}, 1000);
@@ -318,16 +321,17 @@ $(function() {
 			_self.model.bind('change:position', function() {
 				_self.model.messages().fetch();
 			});
+			this.scroller = new iScroll('messages', {desktopCompatibility: true});
 		},
 		
 		render: function() {
-			$("html, body").animate({ scrollTop: $(document).height() + 200 }, 500);
 			var msgs = this.$('#messages').empty();
 			this.model.messages().each(function(msg) {
 				var mv = new MessageView({model: msg});
 				msgs.append(mv.render().el);
 				mv.model.bind('change', mv.render);
 			});
+			this.scroller.refresh();
 		},
 		
 		create: function(e) {
