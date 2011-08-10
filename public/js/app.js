@@ -167,6 +167,8 @@ $(function() {
 								alert ('Timeout');
 								break;
 							case error.POSITION_UNAVAILABLE:
+								alert ('Your position was unavailable, please try again.');
+								break;
 							case error.PERMISSION_DENIED:
 								alert ('You must allow the app to use your location.');
 								break;
@@ -244,8 +246,6 @@ $(function() {
 			  , context = canvas.getContext("2d")
 			  , percent = this.model.get('points') / 10;
 			
-			console.log(percent);
-			
 			context.moveTo(0, 0);
 			context.lineWidth = 10;
 			var radius = 22;
@@ -312,7 +312,7 @@ $(function() {
 		
 		initialize: function() {
 			var _self = this;
-			_.bindAll(_self, 'render');
+			_.bindAll(_self, 'render', 'resize');
 			_self.model.locate();
 			_self.model.messages().bind('all', function(e) {
 				_self.model.set({updated: now()});
@@ -321,7 +321,13 @@ $(function() {
 			_self.model.bind('change:position', function() {
 				_self.model.messages().fetch();
 			});
+			this.resize();
+			$(window).resize(this.resize);
 			this.scroller = new iScroll('messages', {desktopCompatibility: true});
+		},
+		
+		resize: function() {
+			this.$('#scroller').height($(window).height() - this.$('#create').outerHeight() - $('header').outerHeight());
 		},
 		
 		render: function() {
