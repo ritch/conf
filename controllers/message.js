@@ -13,11 +13,18 @@ io.sockets.on('connection', function(socket) {
 	all.push(socket);
 });
 
+// now
+function now() {
+	var now = new Date();
+	return now.getTime() + (now.getTimezoneOffset() * 60000);
+}
+
 hive
 .at('/messages')
 .get('/', Messages)
 .at('/message')
 .post('/', function(req, res) {
+	req.body.created = req.body.updated = now();
 	var msg = new Message(req.body);
 	msg.set({mid: new mongoose.Types.ObjectId});
 	all.forEach(function(socket) {
@@ -26,6 +33,7 @@ hive
 	return msg;
 })
 .put('/', function(req, res) {
+	req.body.updated = now();
 	var msg = new Message(req.body);
 	all.forEach(function(socket) {
 		socket.emit('update:message', req.body);
