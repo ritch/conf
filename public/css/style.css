@@ -115,6 +115,8 @@ header {
 	float: right; left: 5px;
 }
 
+#main {background: #46505e url('../images/bg.png')}
+
 @media all and (max-width: 800px) {
 	
 	.flares {display: none;}

@@ -253,7 +253,7 @@ $(function() {
 			var y = 27;
 			// The angle of each of the eight segments is 45 degrees (360 divided by 8), which
 			// equals p/4 radians.
-			var parts = 100;
+			var parts = 120;
 			var angleDelta = Math.PI / (parts / 2);
 			// Find the distance from the circle's center to the control points for the curves.
 			var ctrlDist = radius/Math.cos(angleDelta/2);
@@ -281,7 +281,7 @@ $(function() {
 					if(i / parts > percent && !finishing && percent > 0) {
 						context.lineTo(rx, ry);
 						finishing = true;
-						context.strokeStyle = "#C6ED47";
+						context.strokeStyle = "#478C43";
 						context.stroke();
 						context.beginPath();
 					}
@@ -291,9 +291,9 @@ $(function() {
 				}
 			}
 			context.lineTo(x + radius, y);
-			context.strokeStyle = "#F4F4F4";
+			context.strokeStyle = "#FFFFFF";
 			if(percent >= 1) {
-				context.strokeStyle = '#C6ED47';
+				context.strokeStyle = '#478C43';
 			}
 			context.stroke();
 		}
@@ -327,7 +327,7 @@ $(function() {
 		},
 		
 		resize: function() {
-			this.$('#scroller').height($(window).height() - this.$('#create').outerHeight() - $('header').outerHeight());
+			this.$('#scroller').height(wh - this.$('#create').outerHeight() - $('header').outerHeight());
 		},
 		
 		render: function() {
