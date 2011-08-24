@@ -127,17 +127,17 @@ $(function() {
 			  , _self  = this;
 			
 			socket.on('message', function (data) {
-				console.log('saw update', data);
 				var m = new Message(data);
+				data.created = now();
 				_self.messages().add(m);
 				if(app && app.scroller) {
-					app.scroller.scrollToElement($('#messages li:last')[0]);
+					app.scroller.scrollToElement($('#messages li:last')[0], 300);
 				}
 				_self.messages().fetch({add: true});
 			});
 			
 			socket.on('update:message', function(data) {
-				console.log('update', data);
+				data.updated = now();
 				_self.messages()
 					.get(data.mid)
 					.set(data);
@@ -311,10 +311,13 @@ $(function() {
 		},
 		
 		initialize: function() {
-			var _self = this;
+			var _self = this
+			  , body = $(document.body);
+			
 			_.bindAll(_self, 'render', 'resize');
 			_self.model.locate();
 			_self.model.messages().bind('all', function(e) {
+				body.removeClass('loading');
 				_self.model.set({updated: now()});
 				_self.render();
 			});
@@ -323,11 +326,12 @@ $(function() {
 			});
 			this.resize();
 			$(window).resize(this.resize);
-			this.scroller = new iScroll('messages', {desktopCompatibility: true});
+			this.scroller = new iScroll('scroller', {desktopCompatibility: true});
 		},
 		
 		resize: function() {
 			this.$('#scroller').height($(window).height() - this.$('#create').outerHeight() - $('header').outerHeight());
+			this.scroller && this.scroller.refresh();
 		},
 		
 		render: function() {

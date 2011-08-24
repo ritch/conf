@@ -149,6 +149,7 @@ header h1 {
 #container {
 	max-width: 800px; background: #fff; height: 100%; margin: auto;
 }
+
 #messages, #messages li {list-style: none; background: #fff; border-top: solid 1px #CCE1E8; border-bottom: solid 1px #fff;}
 #messages li .inner {
 	margin: 0;
@@ -164,11 +165,16 @@ header h1 {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfeff', endColorstr='#dee7ea',GradientType=0 ); /* IE6-9 */
 	background: linear-gradient(top, #fcfeff 0%,#dee7ea 100%); /* W3C */
 }
-#scroller {position:relative; width: 100%;  z-index:1; overflow-y: auto; height: 100%;}
+#scroller {position:relative; width: 100%;  z-index:1; overflow-y: auto; height: 100%; background-image: url('../images/cloud.png'), url('../images/bg.png'); background-repeat: no-repeat; background-position: center;}
 #messages li p {color: #555; float: left; width: 75%; text-shadow: #fff 1px 1px 0;}
 #messages li .points {float: right;}
 #messages li .points canvas {margin-top: -15px;}
 #messages li .num {text-align: center; margin-top: -48px; width: 60px; margin-left: -3px;}
+
+.loading #messages {
+	background: url('../images/loader.gif') no-repeat center;
+	height: 100%;
+}
 
 #create {
 	bottom: 0px;
